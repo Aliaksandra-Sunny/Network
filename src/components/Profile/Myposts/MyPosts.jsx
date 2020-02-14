@@ -6,7 +6,7 @@ const MyPosts =() =>{
 
     return(
             <div className={s.MyPosts}>
-                My posts
+                <h4>My posts</h4>
                 <div>
                     <textarea></textarea>
                     <button>Add post</button>

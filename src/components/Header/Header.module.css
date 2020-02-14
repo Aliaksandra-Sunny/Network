@@ -1,6 +1,6 @@
 .header{
     grid-area: h;
-    background: linear-gradient(to left bottom, #8b35f1, #f15b87);;
+    background: linear-gradient(to right bottom, rgba(241, 17, 17, 0.64), #f1a56a);;
 }
 .header img{
     height: 100%;

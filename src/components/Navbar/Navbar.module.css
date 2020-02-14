@@ -1,13 +1,22 @@
 .nav{
     grid-area: n;
-    background-color: rgba(225, 31, 0, 0.43);
+    background-color: rgba(43, 180, 35, 0.64);
     width: 100%;
 }
 
 .item{
     margin: 10px;
-    border: red 1px solid;
+    border: #19a01c 1px solid;
     text-align: center;
+    color: white;
 }
 
+.item a{
+    color: #6578cc;
+    text-decoration: none;
+}
+
+.item a.active{
+    color: #144a91;
+}
 
