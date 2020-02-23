@@ -3,7 +3,11 @@
 }
 
 h4{
-    margin: 0;
+    margin-top: 0;
+}
+
+.newPost{
+    margin-bottom: 20px;
 }
 
 textarea{
