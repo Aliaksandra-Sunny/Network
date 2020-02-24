@@ -20,3 +20,14 @@
     color: #144a91;
 }
 
+.friends{
+    display: flex;
+
+}
+
+h3{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+

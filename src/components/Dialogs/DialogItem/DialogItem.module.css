@@ -1,12 +1,12 @@
-.dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
-}
-
-.dialogsItems {
-    padding: 10px;
-}
-
-.dialogsItems .active{
+.dialogsItems .active {
     color: #62c4e6;
+}
+
+a.active {
+    color: #18c915;
+
+}
+
+.dialog a{
+    text-decoration: none;
 }

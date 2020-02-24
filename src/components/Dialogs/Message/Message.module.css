@@ -1,4 +1,21 @@
-
 .message {
 
+}
+
+.you{
+    text-align: right;
+    background-color: #fffdb5;
+}
+
+.another{
+    text-align: left;
+    background-color: #d1ffae;
+}
+
+.message img{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
 }
