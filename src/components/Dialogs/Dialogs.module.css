@@ -18,6 +18,10 @@
 
 }
 
-.message {
+.sendedMessages{
 
+}
+
+.newMessage textarea{
+    width: 85%;
 }
