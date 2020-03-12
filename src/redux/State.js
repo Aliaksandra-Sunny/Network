@@ -34,50 +34,43 @@ let store = {
                 ],
         },
     },
-
-    getState() {
-        return this._state;
-    },
-
     _rerenderEntireTree() {
         console.log("State was changed")
     },
 
-    addMessage() {
-        let newMessage = {
-            id: 1,
-            message: this._state.dialogPage.newMessageText,
-            user: 0,
-        };
-        this._state.dialogPage.messages.push(newMessage);
-        this._state.dialogPage.newMessageText = "";
-        this._rerenderEntireTree(this._state);
-    },
-
-    updateNewMessageText(newText) {
-        this._state.dialogPage.newMessageText = newText;
-        this._rerenderEntireTree(this._state);
-    },
-
-
-    addPost() {
-        let newPost = {
-            id: 3,
-            message: this._state.profilePage.newPostText,
-            likeCount: 0,
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._rerenderEntireTree(this._state);
-    },
-
-    updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText;
-        this._rerenderEntireTree(this._state);
-    },
-
     subscribe(observer) {
         this._rerenderEntireTree = observer;
+    },
+    getState() {
+        return this._state;
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 3,
+                message: this._state.profilePage.newPostText,
+                likeCount: 0,
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = "";
+            this._rerenderEntireTree(this._state);
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText;
+            this._rerenderEntireTree(this._state);
+        } else if (action.type === 'SEND-MESSAGE') {
+            let newMessage = {
+                id: 1,
+                message: this._state.dialogPage.newMessageText,
+                user: 0,
+            };
+            this._state.dialogPage.messages.push(newMessage);
+            this._state.dialogPage.newMessageText = "";
+            this._rerenderEntireTree(this._state);
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+            this._state.dialogPage.newMessageText = action.newText;
+            this._rerenderEntireTree(this._state);
+        }
     },
 };
 

@@ -9,12 +9,12 @@ const Dialogs = (props) => {
     let messageElements = props.dialogPage.messages.map(message => <Message message={message}/>);
 
     let sendMessage = () => {
-        props.addMessage();
+        props.dispatch({type: 'SEND-MESSAGE'});
     };
 
     let onMessageChange = (e) => {
         let text = e.currentTarget.value;
-        props.updateNewMessageText(text);
+        props.dispatch({type: 'UPDATE-NEW-MESSAGE-TEXT', newText: text});
     };
 
     return (
