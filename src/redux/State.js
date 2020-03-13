@@ -31,7 +31,9 @@ let store = {
         },
 
         sideBar: {
-            friends: // state.dialogPage.dialogs,
+
+             friends:
+             // store.getState().dialogPage.dialogs,
                 [
                     {id: 1, name: 'Tolya'},
                     {id: 2, name: 'Tanya'},
