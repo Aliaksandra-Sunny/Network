@@ -1,7 +1,7 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-const dialogReducer = (state, action) => {
+const dialogsReducer = (state, action) => {
     if (action.type === SEND_MESSAGE) {
         state.messages.push({id: 4, message: state.newMessageText, user: 0});
         state.newMessageText = "";
@@ -9,4 +9,6 @@ const dialogReducer = (state, action) => {
         state.newMessageText = action.newText;
     }
     return state;
-}
+};
+
+export default dialogsReducer;

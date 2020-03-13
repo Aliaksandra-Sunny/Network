@@ -1,3 +1,7 @@
+import profileReducer from "./profileReducer";
+import dialogsReducer from "./dialogsReducer";
+import sidebarReducer from "./sidebarReducer";
+
 const ADD_POST='ADD-POST';
 const UPDATE_NEW_POST_TEXT='UPDATE-NEW-POST-TEXT';
 const SEND_MESSAGE = 'SEND-MESSAGE';
@@ -53,31 +57,11 @@ let store = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPost = {
-                id: 3,
-                message: this._state.profilePage.newPostText,
-                likeCount: 0,
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText;
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'SEND-MESSAGE') {
-            let newMessage = {
-                id: 1,
-                message: this._state.dialogPage.newMessageText,
-                user: 0,
-            };
-            this._state.dialogPage.messages.push(newMessage);
-            this._state.dialogPage.newMessageText = "";
-            this._rerenderEntireTree(this._state);
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
-            this._state.dialogPage.newMessageText = action.newText;
-            this._rerenderEntireTree(this._state);
-        }
+        this._state.profilePage=profileReducer(this._state.profilePage, action);
+         this._state.dialogPage=dialogsReducer(this._state.dialogPage, action);
+         this._state.sideBar=sidebarReducer(this._state.sideBar, action);
+        this._rerenderEntireTree(this._state);
+
     },
 };
 
