@@ -14,7 +14,7 @@ const Message = (props) => {
                     :
                     <>
                         {props.message.message}
-                        <img src='https://bigpicture.ru/wp-content/uploads/2019/05/IMG_7276-800x800.jpg'/>
+                        <img src='https://ololo.tv/wp-content/uploads/2019/05/parrot-eyes11.jpg'/>
                     </>
             }
         </div>

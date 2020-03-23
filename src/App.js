@@ -8,7 +8,6 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import News from "./components/News/News";
-import store from "./redux/State";
 
 function App(props) {
     return (
