@@ -8,6 +8,7 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import News from "./components/News/News";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 function App(props) {
     return (
@@ -15,8 +16,7 @@ function App(props) {
             <Header/>
             <Navbar sideBar={props.state.sideBar}/>
             <div className='app-wrapper-content'>
-                <Route path="/dialogs" render={() => <Dialogs dialogPage={props.state.dialogPage}
-                                                              store={props.store}/>}/>
+                <Route path="/dialogs" render={() => <DialogsContainer store={props.store}/>}/>
                 <Route path="/profile" render={() => <Profile store={props.store} />}/>
                 <Route path="/news" render={() => <News/>}/>
                 <Route path="/music" render={() => <Music/>}/>
