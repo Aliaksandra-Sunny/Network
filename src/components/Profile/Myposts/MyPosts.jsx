@@ -3,7 +3,7 @@ import style from './MyPosts.module.css'
 import Post from "./Post/Post";
 
 const MyPosts = (props) => {
-    let postsElements = props.posts.map(post => <Post likeCount={post.likeCount} message={post.message}/>);
+    let postsElements = props.posts.map(post => <Post key={post.id} likeCount={post.likeCount} message={post.message}/>);
 
     let onAddPost = () => {
         props.addPost();
