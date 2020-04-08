@@ -3,56 +3,33 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
 let initialState = {
-    users: [
-        {
-            id: 1,
-            followed: false,
-            fullName: "Alexandra",
-            status: "I'm a student",
-            location: {country: "Belarus", city: "Minsk"}
-        },
-        {
-            id: 2,
-            followed: true,
-            fullName: "Tatiana",
-            status: "I'm a starosta",
-            location: {country: "France", city: "Paris"}
-        },
-        {
-            id: 3,
-            followed: true,
-            fullName: "Anastasia",
-            status: "I'm a student and a starosta",
-            location: {country: "USA", city: "NY"}
-        },
-    ],
+    users: [],
 };
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW: {
-            let stateCopy = {
+            return {
                 ...state, users: state.users.map(user => {
                     if (user.id === action.userID)
                         return {...user, followed: true};
                     return user;
                 })
-            }
+            };
         }
         case UNFOLLOW: {
-            let stateCopy = {
+            return  {
                 ...state, users: state.users.map(user => {
                     if (user.id === action.userID)
                         return {...user, followed: false};
                     return user;
                 })
-            }
+            };
         }
         case SET_USERS: {
             return {...state, users: [...state.users, ...action.users]}
         }
-
-
+            break;
         default:
             return state;
     }
