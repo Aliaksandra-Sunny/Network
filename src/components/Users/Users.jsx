@@ -1,61 +1,40 @@
 import React from "react";
 import style from "./Users.module.css";
-import * as axios from "axios";
-import userPhoto from "../../images/user.png"
+import userPhoto from "../../images/user.png";
 
-class Users extends React.Component {
+let Users = ({pageSize,totalUsersCount, pageList, currentPage, follow, unfollow, onPageChange, setPageList, users}) => {
+    let onPrevious = () => {
+        setPageList(pageList - 1);
+    };
+    let onNext = () => {
+        setPageList(pageList + 1);
+    };
 
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
-            .then(response => {
-                this.props.setTotalUsersCount(response.data.totalCount)
-                this.props.setUsers(response.data.items);
-
-            });
+    let pagesCount = Math.ceil(totalUsersCount / pageSize);
+    let pages = [];
+    for (let i = 20 * pageList - 19; i <= (pagesCount > pageList * 20 ? pageList * 20 : pagesCount); i++) {
+        pages.push(i)
     }
-
-    onPageChange = (pageNum) => {
-        this.props.changePage(pageNum);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`)
-            .then(response => this.props.setUsers(response.data.items));
-    };
-    onPrevious = () => {
-        this.props.setPageList(this.props.pageList - 1);
-    };
-    onNext = () => {
-        this.props.setPageList(this.props.pageList + 1);
-    };
-
-
-    render() {
-
-        const {pageSize,totalUsersCount, pageList, currentPage} = this.props;
-        let pagesCount = Math.ceil(totalUsersCount / pageSize);
-        let pages = [];
-        for (let i = 20 * pageList - 19; i <= (pagesCount > pageList * 20 ? pageList * 20 : pagesCount); i++) {
-            pages.push(i)
-        }
-        return (
+    return (
+        <div>
             <div>
-
-                <div>
-                    {pageList > 1 && <span onClick={() => {
-                        this.onPrevious()
-                    }}> {"<-"}</span>}
-                    {
-                        pages.map(p => {
-                            return <span onClick={() => {
-                                this.onPageChange(p)
-                            }} className={currentPage === p && style.selectedPage}>{p}</span>
-                        })
-                    }
-                    {pageList*20 < pagesCount && <span onClick={() => {
-                        this.onNext()
-                    }}>-></span>}
-                </div>
-
+                {pageList > 1 && <span onClick={() => {
+                    onPrevious()
+                }}> {"<-"}</span>}
                 {
-                    this.props.users.map(user => <div key={user.id}>
+                    pages.map(p => {
+                        return <span onClick={() => {
+                            onPageChange(p)
+                        }} className={currentPage === p && style.selectedPage}>{p}</span>
+                    })
+                }
+                {pageList * 20 < pagesCount && <span onClick={() => {
+                    onNext()
+                }}>-></span>}
+            </div>
+
+            {
+                users.map(user => <div key={user.id}>
                 <span>
                     <div>
                         <img src={user.photos.small !== null ? user.photos.small : userPhoto} className={style.photo}/>
@@ -63,15 +42,15 @@ class Users extends React.Component {
                     </div>
                     <div>
                         {user.followed === true ? <button onClick={() => {
-                                this.props.unfollow(user.id)
+                                unfollow(user.id)
                             }}>Unfllow</button> :
                             <button onClick={() => {
-                                this.props.follow(user.id)
+                                follow(user.id)
                             }}>Follow</button>}
 
                     </div>
                 </span>
-                        <span>
+                    <span>
                     <span>
                     <div>{user.name}</div><div>{user.status}</div>
                     </span>
@@ -79,11 +58,10 @@ class Users extends React.Component {
                         <div>{"user.location.country"}</div><div>{"user.location.city"}</div>
                     </span>
                 </span>
-                    </div>)
-                }
-            </div>
-        )
-    }
-}
+                </div>)
+            }
+        </div>
+    )
+};
 
 export default Users;
