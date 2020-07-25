@@ -4,16 +4,56 @@ import * as axios from "axios";
 import userPhoto from "../../images/user.png"
 
 class Users extends React.Component {
-    constructor(props){
-        super(props)
-        axios.get("https://social-network.samuraijs.com/api/1.0/users")
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
+            .then(response => {
+                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setUsers(response.data.items);
+
+            });
+    }
+
+    onPageChange = (pageNum) => {
+        this.props.changePage(pageNum);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`)
             .then(response => this.props.setUsers(response.data.items));
+    };
+    onPrevious = () => {
+        this.props.setPageList(this.props.pageList - 1);
+    };
+    onNext = () => {
+        this.props.setPageList(this.props.pageList + 1);
     };
 
 
     render() {
+
+        const {pageSize,totalUsersCount, pageList, currentPage} = this.props;
+        let pagesCount = Math.ceil(totalUsersCount / pageSize);
+        let pages = [];
+        for (let i = 20 * pageList - 19; i <= (pagesCount > pageList * 20 ? pageList * 20 : pagesCount); i++) {
+            pages.push(i)
+        }
         return (
             <div>
+
+                <div>
+                    {pageList > 1 && <span onClick={() => {
+                        this.onPrevious()
+                    }}> {"<-"}</span>}
+                    {
+                        pages.map(p => {
+                            return <span onClick={() => {
+                                this.onPageChange(p)
+                            }} className={currentPage === p && style.selectedPage}>{p}</span>
+                        })
+                    }
+                    {pageList*20 < pagesCount && <span onClick={() => {
+                        this.onNext()
+                    }}>-></span>}
+                </div>
+
                 {
                     this.props.users.map(user => <div key={user.id}>
                 <span>
@@ -44,8 +84,6 @@ class Users extends React.Component {
             </div>
         )
     }
-
-
-};
+}
 
 export default Users;
