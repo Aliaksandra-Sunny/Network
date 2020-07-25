@@ -11,8 +11,6 @@ import {
     unfollowAC
 } from "../../redux/usersReducer";
 
-
-
 class UsersContainer extends React.Component {
 
     componentDidMount() {

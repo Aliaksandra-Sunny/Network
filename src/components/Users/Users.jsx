@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Users.module.css";
 import userPhoto from "../../images/user.png";
 
-let Users = ({pageSize,totalUsersCount, pageList, currentPage, follow, unfollow, onPageChange, setPageList, users}) => {
+let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow, onPageChange, setPageList, users}) => {
     let onPrevious = () => {
         setPageList(pageList - 1);
     };
@@ -17,7 +17,7 @@ let Users = ({pageSize,totalUsersCount, pageList, currentPage, follow, unfollow,
     }
     return (
         <div>
-            <div>
+            <div className={style.pages}>
                 {pageList > 1 && <span onClick={() => {
                     onPrevious()
                 }}> {"<-"}</span>}
@@ -34,11 +34,10 @@ let Users = ({pageSize,totalUsersCount, pageList, currentPage, follow, unfollow,
             </div>
 
             {
-                users.map(user => <div key={user.id}>
-                <span>
+                users.map(user => <div className={style.user} key={user.id}>
+                <div className={style.ava}>
                     <div>
                         <img src={user.photos.small !== null ? user.photos.small : userPhoto} className={style.photo}/>
-
                     </div>
                     <div>
                         {user.followed === true ? <button onClick={() => {
@@ -49,15 +48,11 @@ let Users = ({pageSize,totalUsersCount, pageList, currentPage, follow, unfollow,
                             }}>Follow</button>}
 
                     </div>
-                </span>
-                    <span>
-                    <span>
-                    <div>{user.name}</div><div>{user.status}</div>
-                    </span>
-                    <span>
-                        <div>{"user.location.country"}</div><div>{"user.location.city"}</div>
-                    </span>
-                </span>
+                </div>
+                    <div className={style.info}>
+                        <span>Name: {user.name}</span>
+                        <span>{user.status}</span>
+                    </div>
                 </div>)
             }
         </div>

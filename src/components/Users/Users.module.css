@@ -7,6 +7,22 @@
  font-weight: bold;
 }
 
-span{
+.pages span{
     margin: 2px;
+    cursor: pointer;
+}
+.pages{
+    text-align: center;
+}
+.user{
+    border: 1px solid orange;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+}
+.ava{
+    margin: 5px;
+}
+.info{
+    margin: 5px;
 }
