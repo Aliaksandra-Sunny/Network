@@ -16,7 +16,7 @@ let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow
         pages.push(i)
     }
     return (
-        <div>
+        <div className={style.users}>
             <div className={style.pages}>
                 {pageList > 1 && <span onClick={() => {
                     onPrevious()

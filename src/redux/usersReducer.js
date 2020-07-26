@@ -4,7 +4,7 @@ const SET_USERS = 'SET-USERS';
 const CHANGE_PAGE = 'CHANGE-PAGE';
 const SET_TOTAL_COUNT='SET-TOTAL-COUNT';
 const SET_PAGE_LIST='SET-PAGE-LIST';
-
+const SET_IS_LOADING='SET-IS-LOADING'
 
 let initialState = {
     users: [],
@@ -12,7 +12,7 @@ let initialState = {
     pageSize: 5,
     currentPage: 1,
     pageList: 1,
-
+    isLoading: false,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -47,6 +47,9 @@ const usersReducer = (state = initialState, action) => {
         case SET_PAGE_LIST:{
             return {...state, pageList: action.pageList}
         }
+        case SET_IS_LOADING:{
+            return {...state, isLoading: action.isLoading}
+        }
         default:
             return state;
     }
@@ -70,8 +73,8 @@ export const setTotalUsersCountAC = (totalCount)=>{
 export const setPageListAC = (pageList)=>{
     return {type: SET_PAGE_LIST, pageList}
 };
-
-
-
+export const setIsLoadingAC = (isLoading)=>{
+    return {type: SET_IS_LOADING, isLoading}
+};
 
 export default usersReducer;

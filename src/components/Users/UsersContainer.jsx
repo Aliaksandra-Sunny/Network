@@ -4,36 +4,50 @@ import Users from "./Users";
 import * as axios from "axios"
 import {
     changePageAC,
-    followAC,
+    followAC, setIsLoadingAC,
     setPageListAC,
     setTotalUsersCountAC,
     setUsersAC,
     unfollowAC
 } from "../../redux/usersReducer";
+import CircularProgress from '@material-ui/core/CircularProgress';
+//
+// const userComponent = styled.div``
 
 class UsersContainer extends React.Component {
-
     componentDidMount() {
+        this.props.setIsLoading(true);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
             .then(response => {
-                this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setTotalUsersCount(response.data.totalCount);
                 this.props.setUsers(response.data.items);
-
+                this.props.setIsLoading(false);
             });
     }
 
     onPageChange = (pageNum) => {
+        this.props.setIsLoading(true);
         this.props.changePage(pageNum);
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`)
-            .then(response => this.props.setUsers(response.data.items));
+            .then(response => {
+                this.props.setUsers(response.data.items);
+                this.props.setIsLoading(false);
+            });
     };
 
     render() {
+        return (
+            <div style={{display: "flex", justifyContent:"center", alignItems: "center", width:"100%", height:"100%"}}>
+                {this.props.isLoading ? <CircularProgress disableShrink/> :
+                    <Users pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount}
+                           pageList={this.props.pageList}
+                           currentPage={this.props.currentPage} follow={this.props.follow}
+                           unfollow={this.props.unfollow}
+                           onPageChange={this.onPageChange} setPageList={this.props.setPageList}
+                           users={this.props.users}/>}
 
-        return <Users pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount}
-                      pageList={this.props.pageList}
-                      currentPage={this.props.currentPage} follow={this.props.follow} unfollow={this.props.unfollow}
-                      onPageChange={this.onPageChange} setPageList={this.props.setPageList} users={this.props.users}/>
+            </div>
+        )
     }
 }
 
@@ -43,17 +57,19 @@ const mapStateToProps = (state) => {
         pageList: state.usersPage.pageList,
         totalUsersCount: state.usersPage.totalUsersCount,
         pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isLoading: state.usersPage.isLoading,
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         follow: (userID) => dispatch(followAC(userID)),
         unfollow: (userID) => dispatch(unfollowAC(userID)),
-        setUsers:(users)=>dispatch(setUsersAC(users)),
-        changePage:(page)=>dispatch(changePageAC(page)),
-        setTotalUsersCount:(totalCount)=>dispatch(setTotalUsersCountAC(totalCount)),
-        setPageList: (pageList)=>dispatch(setPageListAC(pageList))
+        setUsers: (users) => dispatch(setUsersAC(users)),
+        changePage: (page) => dispatch(changePageAC(page)),
+        setTotalUsersCount: (totalCount) => dispatch(setTotalUsersCountAC(totalCount)),
+        setPageList: (pageList) => dispatch(setPageListAC(pageList)),
+        setIsLoading: (isLoading) => dispatch(setIsLoadingAC(isLoading)),
     }
 };
 
