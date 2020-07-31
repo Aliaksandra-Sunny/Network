@@ -3,12 +3,12 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import * as axios from "axios"
 import {
-    changePageAC,
-    followAC, setIsLoadingAC,
-    setPageListAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC
+    changePage,
+    follow, setIsLoading,
+    setPageList,
+    setTotalUsersCount,
+    setUsers,
+    unfollow
 } from "../../redux/usersReducer";
 import CircularProgress from '@material-ui/core/CircularProgress';
 //
@@ -37,7 +37,13 @@ class UsersContainer extends React.Component {
 
     render() {
         return (
-            <div style={{display: "flex", justifyContent:"center", alignItems: "center", width:"100%", height:"100%"}}>
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: "100%"
+            }}>
                 {this.props.isLoading ? <CircularProgress disableShrink/> :
                     <Users pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount}
                            pageList={this.props.pageList}
@@ -61,16 +67,13 @@ const mapStateToProps = (state) => {
         isLoading: state.usersPage.isLoading,
     }
 };
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userID) => dispatch(followAC(userID)),
-        unfollow: (userID) => dispatch(unfollowAC(userID)),
-        setUsers: (users) => dispatch(setUsersAC(users)),
-        changePage: (page) => dispatch(changePageAC(page)),
-        setTotalUsersCount: (totalCount) => dispatch(setTotalUsersCountAC(totalCount)),
-        setPageList: (pageList) => dispatch(setPageListAC(pageList)),
-        setIsLoading: (isLoading) => dispatch(setIsLoadingAC(isLoading)),
-    }
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    changePage,
+    setTotalUsersCount,
+    setPageList,
+    setIsLoading
+})(UsersContainer);
