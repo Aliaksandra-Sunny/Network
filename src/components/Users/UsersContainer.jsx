@@ -11,8 +11,15 @@ import {
     unfollow
 } from "../../redux/usersReducer";
 import CircularProgress from '@material-ui/core/CircularProgress';
-//
-// const userComponent = styled.div``
+import styled from "styled-components";
+
+const UserComponent = styled.div`
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ height: 100%;
+ `;
 
 class UsersContainer extends React.Component {
     componentDidMount() {
@@ -37,13 +44,7 @@ class UsersContainer extends React.Component {
 
     render() {
         return (
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "100%"
-            }}>
+            <UserComponent>
                 {this.props.isLoading ? <CircularProgress disableShrink/> :
                     <Users pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount}
                            pageList={this.props.pageList}
@@ -52,7 +53,7 @@ class UsersContainer extends React.Component {
                            onPageChange={this.onPageChange} setPageList={this.props.setPageList}
                            users={this.props.users}/>}
 
-            </div>
+            </UserComponent>
         )
     }
 }
