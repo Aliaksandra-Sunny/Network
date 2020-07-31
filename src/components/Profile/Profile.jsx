@@ -2,8 +2,12 @@ import React from 'react';
 import style from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./Myposts/MyPostsContainer";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 
 const Profile = (props) => {
+    if(!props.profile){
+        return   <CircularProgress disableShrink/>
+    }
     return (
         <div>
             <ProfileInfo profile={props.profile}/>
