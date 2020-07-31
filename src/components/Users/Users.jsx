@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Users.module.css";
 import userPhoto from "../../images/user.png";
+import {NavLink} from "react-router-dom";
 
 let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow, onPageChange, setPageList, users}) => {
     let onPrevious = () => {
@@ -35,20 +36,23 @@ let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow
 
             {
                 users.map(user => <div className={style.user} key={user.id}>
-                <div className={style.ava}>
-                    <div>
-                        <img src={user.photos.small !== null ? user.photos.small : userPhoto} className={style.photo}/>
-                    </div>
-                    <div>
-                        {user.followed === true ? <button onClick={() => {
-                                unfollow(user.id)
-                            }}>Unfllow</button> :
-                            <button onClick={() => {
-                                follow(user.id)
-                            }}>Follow</button>}
+                    <div className={style.ava}>
+                        <div>
+                            <NavLink to={"/profile/" + user.id}>
+                                <img src={user.photos.small !== null ? user.photos.small : userPhoto}
+                                     className={style.photo}/>
+                            </NavLink>
+                        </div>
+                        <div>
+                            {user.followed === true ? <button onClick={() => {
+                                    unfollow(user.id)
+                                }}>Unfllow</button> :
+                                <button onClick={() => {
+                                    follow(user.id)
+                                }}>Follow</button>}
 
+                        </div>
                     </div>
-                </div>
                     <div className={style.info}>
                         <span>Name: {user.name}</span>
                         <span>{user.status}</span>

@@ -24,8 +24,10 @@ const UserComponent = styled.div`
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.setIsLoading(true);
+        debugger
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
             .then(response => {
+                debugger
                 this.props.setTotalUsersCount(response.data.totalCount);
                 this.props.setUsers(response.data.items);
                 this.props.setIsLoading(false);
@@ -43,6 +45,7 @@ class UsersContainer extends React.Component {
     };
 
     render() {
+        debugger
         return (
             <UserComponent>
                 {this.props.isLoading ? <CircularProgress disableShrink/> :

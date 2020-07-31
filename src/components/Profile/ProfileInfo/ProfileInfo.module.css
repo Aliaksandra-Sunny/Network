@@ -20,3 +20,9 @@
     border: #ffc236 1px solid;
 }
 
+.name{
+    font-weight: normal;
+    border-bottom: #ffc236 3px solid ;
+    width: 100%;
+}
+
