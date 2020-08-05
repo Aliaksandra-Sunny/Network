@@ -12,6 +12,7 @@ import {
 } from "../../redux/usersReducer";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from "styled-components";
+import {usersAPI} from "../../api/api";
 
 const UserComponent = styled.div`
  display: flex;
@@ -24,12 +25,9 @@ const UserComponent = styled.div`
 class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.setIsLoading(true);
-        debugger
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`)
-            .then(response => {
-                debugger
-                this.props.setTotalUsersCount(response.data.totalCount);
-                this.props.setUsers(response.data.items);
+        usersAPI.getUsers(this.props.pageSize, this.props.currentPage).then(data => {
+                this.props.setTotalUsersCount(data.totalCount);
+                this.props.setUsers(data.items);
                 this.props.setIsLoading(false);
             });
     }
@@ -37,15 +35,13 @@ class UsersContainer extends React.Component {
     onPageChange = (pageNum) => {
         this.props.setIsLoading(true);
         this.props.changePage(pageNum);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNum}`)
-            .then(response => {
-                this.props.setUsers(response.data.items);
+        usersAPI.getUsers(this.props.pageSize, this.props.currentPage).then(data => {
+                this.props.setUsers(data.items);
                 this.props.setIsLoading(false);
             });
     };
 
     render() {
-        debugger
         return (
             <UserComponent>
                 {this.props.isLoading ? <CircularProgress disableShrink/> :
