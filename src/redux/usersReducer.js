@@ -2,10 +2,10 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const CHANGE_PAGE = 'CHANGE-PAGE';
-const SET_TOTAL_COUNT='SET-TOTAL-COUNT';
-const SET_PAGE_LIST='SET-PAGE-LIST';
-const SET_IS_LOADING='SET-IS-LOADING';
-const TOGGLE_IS_FOLLOWING_PROGRESS="TOGGLE-IS-FOLLOWING-PROGRESS";
+const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
+const SET_PAGE_LIST = 'SET-PAGE-LIST';
+const SET_IS_LOADING = 'SET-IS-LOADING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE-IS-FOLLOWING-PROGRESS";
 
 let initialState = {
     users: [],
@@ -14,6 +14,7 @@ let initialState = {
     currentPage: 1,
     pageList: 1,
     isLoading: false,
+    followingInProgress: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -28,7 +29,7 @@ const usersReducer = (state = initialState, action) => {
             };
         }
         case UNFOLLOW: {
-            return  {
+            return {
                 ...state, users: state.users.map(user => {
                     if (user.id === action.userID)
                         return {...user, followed: false};
@@ -39,20 +40,25 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {...state, users: action.users}
         }
-        case CHANGE_PAGE:{
+        case CHANGE_PAGE: {
             return {...state, currentPage: action.page}
         }
-        case SET_TOTAL_COUNT:{
-            return  {...state, totalUsersCount: action.totalCount}
+        case SET_TOTAL_COUNT: {
+            return {...state, totalUsersCount: action.totalCount}
         }
-        case SET_PAGE_LIST:{
+        case SET_PAGE_LIST: {
             return {...state, pageList: action.pageList}
         }
-        case SET_IS_LOADING:{
+        case SET_IS_LOADING: {
             return {...state, isLoading: action.isLoading}
         }
-        case TOGGLE_IS_FOLLOWING_PROGRESS:{
-            return {...state, isLoading: action.isLoading}
+        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+            return {
+                ...state,
+                followingInProgress: action.isLoading ?
+                    [...state.followingInProgress, action.id] :
+                    state.followingInProgress.filter(id => id !== action.id)
+            }
         }
         default:
             return state;
@@ -68,20 +74,20 @@ export const unfollow = (userID) => {
 export const setUsers = (users) => {
     return {type: SET_USERS, users}
 };
-export const changePage = (page)=>{
+export const changePage = (page) => {
     return {type: CHANGE_PAGE, page}
 };
-export const setTotalUsersCount = (totalCount)=>{
+export const setTotalUsersCount = (totalCount) => {
     return {type: SET_TOTAL_COUNT, totalCount}
 };
-export const setPageList = (pageList)=>{
+export const setPageList = (pageList) => {
     return {type: SET_PAGE_LIST, pageList}
 };
-export const setIsLoading = (isLoading)=>{
+export const setIsLoading = (isLoading) => {
     return {type: SET_IS_LOADING, isLoading}
 };
-export const toggleFollowingProgress = (isLoading)=>{
-    return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isLoading}
+export const toggleFollowingProgress = (isLoading, id) => {
+    return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isLoading, id}
 };
 
 

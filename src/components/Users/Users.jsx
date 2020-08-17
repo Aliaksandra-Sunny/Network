@@ -4,7 +4,7 @@ import userPhoto from "../../images/user.png";
 import {NavLink} from "react-router-dom";
 import * as axios from "axios";
 
-let Users = ({pageSize, totalUsersCount, pageList, currentPage, onFollowClick, onUnfollowClick, onPageChange, setPageList, users}) => {
+let Users = ({pageSize, totalUsersCount, followingInProgress, pageList, currentPage, onFollowClick, onUnfollowClick, onPageChange, setPageList, users}) => {
     let onPrevious = () => {
         setPageList(pageList - 1);
     };
@@ -45,10 +45,10 @@ let Users = ({pageSize, totalUsersCount, pageList, currentPage, onFollowClick, o
                             </NavLink>
                         </div>
                         <div>
-                            {user.followed === true ? <button onClick={() => {
+                            {user.followed === true ? <button disabled={followingInProgress.some(id=>id===user.id)} onClick={() => {
                                     onUnfollowClick(user.id)
                                 }}>Unfllow</button> :
-                                <button onClick={() => {
+                                <button disabled={followingInProgress.some(id=>id===user.id)} onClick={() => {
                                     onFollowClick(user.id)
                                 }}>Follow</button>}
                         </div>

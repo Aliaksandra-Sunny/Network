@@ -6,7 +6,7 @@ import {
     follow, setIsLoading,
     setPageList,
     setTotalUsersCount,
-    setUsers,
+    setUsers, toggleFollowingProgress,
     unfollow
 } from "../../redux/usersReducer";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -40,19 +40,23 @@ class UsersContainer extends React.Component {
         });
     };
     onUnfollowClick = (id) => {
+        this.props.toggleFollowingProgress(true, id);
         usersAPI.unfollowUser(id)
             .then(data => {
                 if (data.resultCode === 0) {
                     this.props.unfollow(id)
                 }
+                this.props.toggleFollowingProgress(false, id);
             });
     };
     onFollowClick = (id) => {
+        this.props.toggleFollowingProgress(true, id);
         usersAPI.followUser(id)
             .then(data => {
                 if (data.resultCode === 0) {
                     this.props.follow(id)
                 }
+                this.props.toggleFollowingProgress(false, id);
             });
     };
 
@@ -61,7 +65,7 @@ class UsersContainer extends React.Component {
             <UserComponent>
                 {this.props.isLoading ? <CircularProgress disableShrink/> :
                     <Users pageSize={this.props.pageSize} totalUsersCount={this.props.totalUsersCount}
-                           pageList={this.props.pageList}
+                           pageList={this.props.pageList} followingInProgress={this.props.followingInProgress}
                            currentPage={this.props.currentPage}
                            onUnfollowClick={this.onUnfollowClick}
                            onPageChange={this.onPageChange} setPageList={this.props.setPageList}
@@ -80,15 +84,13 @@ const mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
         isLoading: state.usersPage.isLoading,
+        followingInProgress: state.usersPage.followingInProgress
     }
 };
 
 export default connect(mapStateToProps, {
-    follow,
-    unfollow,
-    setUsers,
-    changePage,
-    setTotalUsersCount,
-    setPageList,
-    setIsLoading
+    follow, unfollow,
+    setUsers, changePage,
+    setTotalUsersCount, setPageList,
+    setIsLoading, toggleFollowingProgress
 })(UsersContainer);
