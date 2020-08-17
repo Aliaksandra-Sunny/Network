@@ -12,7 +12,6 @@ import {
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from "styled-components";
 import {usersAPI} from "../../api/api";
-import * as axios from "axios";
 
 const UserComponent = styled.div`
  display: flex;
@@ -41,23 +40,17 @@ class UsersContainer extends React.Component {
         });
     };
     onUnfollowClick = (id) => {
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {
-            withCredentials: true,
-            headers: {"API-KEY": "ed9ff87e-25ab-4b75-a8a6-d22424d524be"}
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
+        usersAPI.unfollowUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
                     this.props.unfollow(id)
                 }
             });
     };
     onFollowClick = (id) => {
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${id}`, {}, {
-            withCredentials: true,
-            headers: {"API-KEY": "ed9ff87e-25ab-4b75-a8a6-d22424d524be"}
-        })
-            .then(response => {
-                if (response.data.resultCode === 0) {
+        usersAPI.followUser(id)
+            .then(data => {
+                if (data.resultCode === 0) {
                     this.props.follow(id)
                 }
             });
