@@ -4,7 +4,7 @@ import userPhoto from "../../images/user.png";
 import {NavLink} from "react-router-dom";
 import * as axios from "axios";
 
-let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow, onPageChange, setPageList, users}) => {
+let Users = ({pageSize, totalUsersCount, pageList, currentPage, onFollowClick, onUnfollowClick, onPageChange, setPageList, users}) => {
     let onPrevious = () => {
         setPageList(pageList - 1);
     };
@@ -46,26 +46,10 @@ let Users = ({pageSize, totalUsersCount, pageList, currentPage, follow, unfollow
                         </div>
                         <div>
                             {user.followed === true ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                                        withCredentials: true,
-                                        headers:{"API-KEY": "ed9ff87e-25ab-4b75-a8a6-d22424d524be"}
-                                    })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                unfollow(user.id)
-                                            }
-                                        });
+                                    onUnfollowClick(user.id)
                                 }}>Unfllow</button> :
                                 <button onClick={() => {
-                                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                                        withCredentials: true,
-                                        headers:{"API-KEY": "ed9ff87e-25ab-4b75-a8a6-d22424d524be"}
-                                    })
-                                        .then(response => {
-                                            if (response.data.resultCode === 0) {
-                                                follow(user.id)
-                                            }
-                                        });
+                                    onFollowClick(user.id)
                                 }}>Follow</button>}
                         </div>
                     </div>

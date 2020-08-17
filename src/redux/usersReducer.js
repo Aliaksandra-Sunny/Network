@@ -4,7 +4,8 @@ const SET_USERS = 'SET-USERS';
 const CHANGE_PAGE = 'CHANGE-PAGE';
 const SET_TOTAL_COUNT='SET-TOTAL-COUNT';
 const SET_PAGE_LIST='SET-PAGE-LIST';
-const SET_IS_LOADING='SET-IS-LOADING'
+const SET_IS_LOADING='SET-IS-LOADING';
+const TOGGLE_IS_FOLLOWING_PROGRESS="TOGGLE-IS-FOLLOWING-PROGRESS";
 
 let initialState = {
     users: [],
@@ -50,6 +51,9 @@ const usersReducer = (state = initialState, action) => {
         case SET_IS_LOADING:{
             return {...state, isLoading: action.isLoading}
         }
+        case TOGGLE_IS_FOLLOWING_PROGRESS:{
+            return {...state, isLoading: action.isLoading}
+        }
         default:
             return state;
     }
@@ -76,5 +80,9 @@ export const setPageList = (pageList)=>{
 export const setIsLoading = (isLoading)=>{
     return {type: SET_IS_LOADING, isLoading}
 };
+export const toggleFollowingProgress = (isLoading)=>{
+    return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isLoading}
+};
+
 
 export default usersReducer;
