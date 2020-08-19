@@ -3,7 +3,6 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setProfile} from "../../redux/profileReducer";
 import {withRouter} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -11,9 +10,7 @@ class ProfileContainer extends React.Component {
         if (!userId) {
             userId = 2;
         }
-        usersAPI.getProfile(userId).then(data => {
-            this.props.setProfile(data);
-        });
+        this.props.setProfile(userId);
     }
 
     render() {
