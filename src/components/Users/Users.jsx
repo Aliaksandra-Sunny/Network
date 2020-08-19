@@ -2,7 +2,6 @@ import React from "react";
 import style from "./Users.module.css";
 import userPhoto from "../../images/user.png";
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
 
 let Users = ({pageSize, totalUsersCount, followingInProgress, pageList, currentPage, onFollowClick, onUnfollowClick, onPageChange, setPageList, users}) => {
     let onPrevious = () => {
