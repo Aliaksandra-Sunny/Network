@@ -2,7 +2,9 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {setProfile} from "../../redux/profileReducer";
-import {withRouter} from "react-router-dom";
+import {Redirect, withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import Dialogs from "../Dialogs/Dialogs";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -28,8 +30,8 @@ const mapStateToProps = (state) => {
         isAuth: state.auth.isAuth
     }
 };
-
-let WithUrlDateContainerComponent = withRouter(ProfileContainer);
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+let WithUrlDateContainerComponent = withRouter(AuthRedirectComponent);
 
 export default connect(mapStateToProps, {
     setProfile

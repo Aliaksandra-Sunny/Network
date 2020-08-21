@@ -7,6 +7,7 @@ import {
 } from "../../redux/usersReducer";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import styled from "styled-components";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 const UserComponent = styled.div`
  display: flex;
@@ -59,6 +60,6 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, {
+export default  withAuthRedirect(connect(mapStateToProps, {
     follow, unfollow, setPageList, getUsers,
-})(UsersContainer);
+})(UsersContainer));
