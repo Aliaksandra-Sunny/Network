@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './ProfileInfo.module.css'
-import CircularProgress from '@material-ui/core/CircularProgress';
 import userPhoto from "../../../images/user.png";
+import ProfileStatus from "./ProfileStatus.jsx"
 
 const ProfileInfo =(props) =>{
     return(
@@ -10,6 +10,7 @@ const ProfileInfo =(props) =>{
                     <img src={props.profile.photos.large!== null ?props.profile.photos.large : userPhoto}/>
                 </div>
                 <div className={s.info }>
+                    <ProfileStatus status={"Hello, I'm frontend developer"}/>
                     <h3 className={s.name}>{props.profile.fullName}</h3>
                     <h4>About me:</h4>
                     <p>{props.profile.aboutMe}</p>
