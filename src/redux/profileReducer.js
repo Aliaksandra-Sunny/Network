@@ -1,8 +1,9 @@
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_PROFILE = "SET-PROFILE";
+const SET_STATUS = "SET-STATUS";
 
 let initialState = {
     posts: [
@@ -10,7 +11,8 @@ let initialState = {
         {id: 2, message: "Hello, Sasha! I'm Tolya", likeCount: 11}
     ],
     newPostText: "",
-    profile: null
+    profile: null,
+    status: "",
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -23,11 +25,16 @@ const profileReducer = (state = initialState, action) => {
             };
             return {...state, newPostText: "", posts: [...state.posts, newPost]};
         }
-        case UPDATE_NEW_POST_TEXT:{
+        case UPDATE_NEW_POST_TEXT: {
             return {...state, newPostText: action.newText};
         }
-        case SET_PROFILE:{
+        case SET_PROFILE: {
             return {...state, profile: action.profile}
+        }
+        case SET_STATUS: {
+            debugger
+            return {...state, status: action.status}
+
         }
         default:
             return state;
@@ -43,10 +50,31 @@ export const updateNewPostTextActionCreator = (text) => {
 export const setProfileAC = (profile) => {
     return {type: SET_PROFILE, profile}
 };
-export const setProfile=(userId)=>{
-    return (dispatch)=>{
+const setStatusAC = (status) => {
+    return {type: SET_STATUS, status: status}
+};
+export const setProfile = (userId) => {
+    return (dispatch) => {
         usersAPI.getProfile(userId).then(data => {
             dispatch(setProfileAC(data));
+        });
+    }
+};
+export const setStatus = (userId) => {
+    return (dispatch) => {
+        debugger
+        profileAPI.getStatus(userId).then(response => {
+            dispatch(setStatusAC(response.data));
+        });
+    }
+};
+
+export const updateStatus = (status) => {
+    return (dispatch) => {
+        profileAPI.updateStatus(status).then(data => {
+            if(data.resultCode===0){
+                dispatch(setStatusAC(status));
+            }
         });
     }
 };

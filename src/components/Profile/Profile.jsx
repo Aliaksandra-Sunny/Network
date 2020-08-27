@@ -8,10 +8,9 @@ const Profile = (props) => {
     if(!props.profile){
         return   <CircularProgress disableShrink/>
     }
-
     return (
         <div>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo updateStatus={props.updateStatus} status={props.status} profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     )

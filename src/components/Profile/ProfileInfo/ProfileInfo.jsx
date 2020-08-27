@@ -10,7 +10,7 @@ const ProfileInfo =(props) =>{
                     <img src={props.profile.photos.large!== null ?props.profile.photos.large : userPhoto}/>
                 </div>
                 <div className={s.info }>
-                    <ProfileStatus status={"Hello, I'm frontend developer"}/>
+                    <ProfileStatus updateStatus={props.updateStatus} status={props.status}/>
                     <h3 className={s.name}>{props.profile.fullName}</h3>
                     <h4>About me:</h4>
                     <p>{props.profile.aboutMe}</p>
